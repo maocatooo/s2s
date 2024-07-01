@@ -1,17 +1,17 @@
 
 import { useAsyncEffect,useSafeState } from "ahooks";
 import { useState } from "react";
-import { Button } from 'antd';
-import { Input } from 'antd';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
 import {encrypt, decrypt} from "@/app/data/encrypt"
 import { upload } from "@/app/data/request";
-const { TextArea } = Input;
+import { Button } from "@/components/ui/button";
 
 const submitFile = async (name, data) => {
   if (!name){
     name = new Date().getTime().toString()
   }
-  const resp = await upload("123", name, encrypt(data, "123333"))
+  const resp = await upload("123", name, encrypt(data, "123333"  ))
   return name
 }
 
@@ -52,16 +52,16 @@ export default function Info({fileMetaInfo}) {
 
     return (
       <> 
-      <div className="bg-gray-100 ">
+      <div >
           <div className="w-full max-w-md">
               {/* <label for="message" className="block text-gray-700 text-sm font-bold mb-2">Message</label> */}
-              <TextArea rows={4} value={textValue}
+              <Textarea className="mt-4" rows={10} placeholder="Enter your message" value={textValue}
               onChange={(e)=>{
                 setTextValue(e.target.value)
               }}/>
               </div>
           <div  className="w-full max-w-md">
-            <Button type="primary" onClick={async ()=>{
+            <Button className="mt-4" onClick={async ()=>{
               await submitFile(fileMetaInfo, textValue)
             }}>submit</Button>
           </div>

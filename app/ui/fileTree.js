@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useAsyncEffect } from "ahooks";
+import { Button } from "@/components/ui/button";
 
 export default  function FileTree({setFileMetaInfo}) {
 
@@ -18,8 +19,10 @@ export default  function FileTree({setFileMetaInfo}) {
 
     return (
       <> 
-        <div onClick={()=>setFileMetaInfo("")}>
-        new file
+        <div>
+          <Button className="mb-4" onClick={()=>setFileMetaInfo("")}>
+          new file
+          </Button>
         </div>
         <div>
 

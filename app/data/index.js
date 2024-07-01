@@ -9,7 +9,7 @@ export function list({current}) {
         return fs.readdirSync(cp )
     }catch(e){
         if (e.toString().indexOf("no such file or directory")!==-1){
-            fs.mkdirSync(cp)
+            fs.mkdirSync(cp, {recursive:true})
             return []
         }
         Promise.reject(e)
