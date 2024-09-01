@@ -6,7 +6,7 @@ export async function POST(req) {
     const data = await req.json()
     const headers = new Headers();
     headers.append('Content-Type', 'application/octet-stream');
-    headers.append('Content-Disposition', `attachment; filename=${data.name}`);
+    headers.append('Content-Disposition', `attachment; filename=${data.m}`);
     const ct = content(data)
 
     return new NextResponse(ct, { headers });
@@ -14,12 +14,12 @@ export async function POST(req) {
 
 
 export async function PUT(req) { 
-    const current = req.headers.get('a-au')
-    const name = req.headers.get('a-title')
+    const s = req.headers.get('a-au')
+    const m = req.headers.get('a-title')
     const data = await req.arrayBuffer()
     write({
-        current,
-        name,
+        s,
+        m,
         data:Buffer.from(data),
     })
     return new NextResponse("ok") 
