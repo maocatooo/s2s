@@ -1,7 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
-import { CopyIcon } from "@radix-ui/react-icons"
+import { useState, useEffect, useContext, useRef } from "react"
 import { Button } from "@/components/ui/button";
 import {
     Dialog,
@@ -15,25 +14,20 @@ import {
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-
-const _Key = "SecretKey"
-
-function getSecretKey() {
-    return localStorage.getItem(_Key) || ""
-}
-
-function setSecretKey(key) {
-    localStorage.setItem(_Key, key)
-}
-
-function DialogCloseButton({ skey, setKey }) {
-    const [inData, setInData] = useState('')
+import {OpenContext} from "@/app/context";
+import {setSecretKey, getSecretKey} from "@/app/storage";
+import { validators } from "tailwind-merge";
 
 
+function DialogCloseButton({ }) {
+    const valueRef = useRef(null)
+    const {openKey,setOpenKey, secret, setSecret} = useContext(OpenContext)
     return (
-        <Dialog>
+        <Dialog open={openKey} onOpenChange={setOpenKey}>
             <DialogTrigger asChild>
-                <Button >key: {skey ? "******" : "------"}</Button>
+                <Button onClick={() => {
+                    setOpenKey(t => !t)
+                }} >key: {secret ? "******" : "------"}</Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-md">
                 <DialogHeader>
@@ -48,14 +42,15 @@ function DialogCloseButton({ skey, setKey }) {
                             Link
                         </Label>
                         <Input
+                            ref={valueRef}
                             id="link"
-                            defaultValue={skey}
-                            onChange={(e) => { setInData(e.target.value) }}
+                            defaultValue={secret}
                         />
                     </div>
                     <DialogClose asChild>
                         <Button type="submit" size="sm" className="px-3" onClick={() => {
-                            setKey(inData)
+                            setSecretKey(valueRef.current.value)
+                            setSecret(valueRef.current.value)
                         }}>
                             <span >Save</span>
                         </Button>
@@ -75,21 +70,12 @@ function DialogCloseButton({ skey, setKey }) {
 }
 
 
-export default function Key({ }) {
-    const [skey, setSKey] = useState("")
+export default function Key() {
 
-    useEffect(() => {
-        setSKey(getSecretKey())
-    }, [])
-
-    const setKey = (k) => {
-        setSKey(k)
-        setSecretKey(k)
-    }
     return (
         <>
-            <div className="fixed bottom-0 left-0">
-                < DialogCloseButton skey={skey} setKey={setKey} />
+            <div >
+                < DialogCloseButton  />
             </div>
             <div>
             </div>

@@ -31,7 +31,7 @@ export function decrypt(data, key) {
 }
 
 
-export function md5(ciphertext, passphrase) {
-    var bytes = CryptoJS.AES.decrypt(ciphertext, passphrase);
-    return bytes.toString(CryptoJS.enc.Utf8);
+export function md5(message) {
+    var hash = CryptoJS.MD5(message);
+    return hash.toString(CryptoJS.enc.Hex);
 }

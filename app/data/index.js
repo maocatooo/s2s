@@ -3,8 +3,8 @@ import path from 'path';
 
 const ROOT_PATH = process.env.ROOT_PATH
 
-export function list({current}) {
-    const cp = path.join(ROOT_PATH, current)
+export function list({s}) {
+    const cp = path.join(ROOT_PATH, s)
     try{
         return fs.readdirSync(cp )
     }catch(e){
@@ -16,8 +16,8 @@ export function list({current}) {
     }
 }
 
-export function content({current, name}) {
-    const cp = path.join(ROOT_PATH, current, name)
+export function content({s, m}) {
+    const cp = path.join(ROOT_PATH, s,  m)
     try{
         return fs.readFileSync(cp )
     }catch(e){
@@ -27,8 +27,8 @@ export function content({current, name}) {
 }
 
 
-export function write({current, name, data}) {
-    const cp = path.join(ROOT_PATH, current, name)
+export function write({s, m, data}) {
+    const cp = path.join(ROOT_PATH, s, m)
     try{
         return fs.writeFileSync(cp, data )
     }catch(e){
